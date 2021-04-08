@@ -155,7 +155,7 @@ parfor k = 1 : (nNO*nRO)
         case 10
             maxit = iter/2;
         case 50
-            maxit = iter/6;
+            maxit = iter/4;
     end
     
     switch char(parRegOptions(k))
