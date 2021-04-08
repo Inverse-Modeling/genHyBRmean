@@ -72,4 +72,4 @@ MainDrivers for each numerical experiments of inverse problems
   6wk_genHyBRmean.m        Run genHyBRmean to 6wk case study with Tikhonov 
                            regularization for various noise levels.
                            Solve for both unknowns(CO2 fluxes) and mean 
-                           coefficients simutaneously.
+                           coefficients simultaneously.
