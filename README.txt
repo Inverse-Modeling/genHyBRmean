@@ -49,7 +49,7 @@ The MainDrivers require the following package:
 
     "genHyBR"
     by Julianne Chung and Arvind Saibaba
-	https://github.com/juliannechung/genHyBR
+    https://github.com/juliannechung/genHyBR
 
 and require the data sets:
     
@@ -61,7 +61,7 @@ and require the data sets:
 
 Include genHyBR package in the current path.
 Put all 'H_i' matrices and 'distmat.mat' in the folder "/H_6wk"
-Put all 's_i' vectors in the folder "/H_6wk"
+Put all 's_i' vectors in the folder "/s_6wk"
 
 MainDrivers for each numerical experiments of inverse problems
 
