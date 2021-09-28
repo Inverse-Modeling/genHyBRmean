@@ -6,10 +6,6 @@
 
     addpath(genpath('DirectMethod'));
     
-% Calculate the uncertainties
-
-    estuncert = 1;
-    
 % Fix reg. parameter
 
     fix_reg_param = 1;
@@ -131,11 +127,10 @@
     D = 1 - 1.5 .* (days   ./theta(4))  + 0.5 .* (days.^3   ./ theta(4).^3);
     D(days   > theta(4)) = 0;
     
-    m = size(X,1);
     switch CaseStudy
         
         case '6wk'
-                sigmaQ = ones(m,1) / (fix_reg_param^2);
+                sigmaQ = ones(size(D,1),1) / fix_reg_param;
         case '1yr'
                 D_theta = [ sqrt(34.7) sqrt(14.84) sqrt(16.09) sqrt(8.32) sqrt(6.66) sqrt(7.47) sqrt(9.67) sqrt(9.37) sqrt(39.07) sqrt(72.63) sqrt(102.37) sqrt(70.43) ]';
                 sigmaQ  = [ D_theta(1) .* ones(8.*30,1); D_theta(2) .* ones(8.*31,1); D_theta(3) .* ones(8.*30,1); ...
@@ -144,14 +139,14 @@
                             D_theta(10) .* ones(8.*30,1); D_theta(11) .* ones(8.*31,1); D_theta(12) .* ones(8.*31,1)];
                 % scaling sigmaQ
                 sigmaQ = sigmaQ/max(sigmaQ(:));  
-                sigmaQ = sigmaQ / (fix_reg_param^2);
+                sigmaQ = sigmaQ / fix_reg_param;
     end
     
     % scaling D
     D = (sigmaQ*sigmaQ') .* D;
     
     % Take the inverse of D
-	Dinv      = inv(D);
+	Dinv      =  inv(D);
     
     % Create the R matrix   
     disp('Create R');
@@ -172,9 +167,11 @@
 % Use the standard kriging equations to estimate the fluxes
 
 	% Compute the psi matrix
+    tic;
 	disp('Launch the script to calculate HQH + R');
         psi = HQHR(R, D, E, Hpath);
-        
+    disp(toc);
+    
     % Compute HX
 	disp('Calculate HX');
 	tic;
@@ -246,18 +243,23 @@
 
     disp('Outputs written to file');
     disp(outfile_fluxes)
+ 
+ %% Calculate the uncertainties
+ 
+    % The estimated fluxes have units of micromol m-2 s-1.
+	% We'll want to convert the units from micromol m-2 s-1 to micromol m-2.
+	% In this case study, the inverse model will estimate fluxes for 3-hourly time periods,
+	% so we'll convert from (1/s) to (1/3 hours)
+	selu = sel.*60.*60.*3;
     
-    % Calculation the uncertainties
+    disp('Calculating the uncertainties')
+    tic;
+    uncert  = uncert_direct(psi,HX,D,E,X,selu,Hpath);
+    disp(toc);
     
-    if estuncert == 1
-        
-        selu = sel.*60.*60.*3;
-        uncert  = uncert_direct(psi,HX,D,E,X,selu,Hpath);
-        
-        disp('Writing outputs to file');
-        dlmwrite(outfile_uncert,full(shat),',');
+    disp('Writing outputs to file');
+    dlmwrite(outfile_uncert,full(uncert),',');
 
-        disp('Outputs written to file');
-        disp(outfile_uncert)
-
-    end
+    disp('Outputs written to file');
+    disp(outfile_uncert)
+    
