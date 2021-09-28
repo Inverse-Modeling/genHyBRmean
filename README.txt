@@ -72,6 +72,6 @@ MainDrivers for each numerical experiments of inverse problems
                            or for both unknowns(CO2 fluxes) and mean 
                            coefficients simultaneously.
   
-  Driver_direct.m          
+  Driver_Direct.m          
     
-  Driver_lbfgs.m
+  Driver_Lbfgs.m
