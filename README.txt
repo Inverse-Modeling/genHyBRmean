@@ -59,17 +59,15 @@ and require the data sets:
     Marikate E. Mountain, and Arlyn E. Andrews
     https://doi.org/10.5281/zenodo.3241466
 
-Include genHyBR package in the current path.
-Put all 'H_i' matrices and 'distmat.mat' in the folder "/H_6wk"
-Put all 's_i' vectors in the folder "/s_6wk"
+- Include genHyBR package in the current path.
+- Put all 'H_i' matrices and 'distmat.mat' in the folders "6wk/H" and "1yr/H"
+- Put all 's_i' vectors and corresponding Z_5, Z_10, Z_50, and Z_100
+  in the folder "6wk/Fire_on/s" and "1yr/Fire_on/s"
 
 MainDrivers for each numerical experiments of inverse problems
 
-  6wk_genHyBRs.m           Run genHyBR to 6wk case study with Tikhonov 
-                           regularization for various noise levels.
-                           Solve for only unknowns(CO2 fluxes).
-
-  6wk_genHyBRmean.m        Run genHyBRmean to 6wk case study with Tikhonov 
-                           regularization for various noise levels.
-                           Solve for both unknowns(CO2 fluxes) and mean 
+  Driver.m                 Run genHyBRs or genHyBRmean to 6wk case study 
+                           with Tikhonov regularization for various noise levels.
+                           Solve either for only unknowns(CO2 fluxes)
+                           or for both unknowns(CO2 fluxes) and mean 
                            coefficients simultaneously.
