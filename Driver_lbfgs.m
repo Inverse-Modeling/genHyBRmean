@@ -10,7 +10,7 @@
     
 % Fix reg. parameter
 
-    fix_reg_param = 0.0653;    
+    fix_reg_param = 1;    
     
 % There are two case studies
 
