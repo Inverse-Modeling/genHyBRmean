@@ -24,7 +24,7 @@
 
 % maximum iteration of L-BFGS
     
-    maxit = 50; 
+    maxit = 300; 
     
 % Choose noise level: 5%, 10%, 50%, 100% (noise ratio to observation)
     
