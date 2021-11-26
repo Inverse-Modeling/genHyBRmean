@@ -66,12 +66,12 @@ and require the data sets:
 
 MainDrivers for each numerical experiments of inverse problems
 
-  Driver_Hybrid.m          Run genHyBRs or genHyBRmean to 6wk case study 
+  Driver_Hybrid.m          Run genHyBRs or genHyBRmean to 6wk & 1yr case study 
                            with Tikhonov regularization for various noise levels.
                            Solve either for only unknowns(CO2 fluxes)
                            or for both unknowns(CO2 fluxes) and mean 
                            coefficients simultaneously.
   
-  Driver_Direct.m          
-    
-  Driver_Lbfgs.m
+  Driver_Direct.m          Run direct method to 6wk case study.
+                           Solve for unknowns(CO2 fluxes).
+                           1yr case is not recommended with direct method.
