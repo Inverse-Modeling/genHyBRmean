@@ -7,6 +7,7 @@
 %% User needs to defined the following options in this section.
 % Add path
 
+    addpath(genpath('functions'));
     addpath(genpath('DirectMethod'));
     
 % Fix reg. parameter - choose regularization parameter to be used in direct

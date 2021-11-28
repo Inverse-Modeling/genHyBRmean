@@ -8,6 +8,7 @@
 %% User needs to defined the following options in this section.
 % Add path
 
+    addpath(genpath('functions'));
     addpath(genpath('genHyBR-master'));
     rmpath('genHyBR-master/RestoreTools/IterativeMethods');
     
