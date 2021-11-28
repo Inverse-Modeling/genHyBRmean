@@ -1,5 +1,5 @@
 %% Direct method
-% This script is for estimating fluxes and of case study fow low noise level(or variance)
+% This script is for estimating fluxes of case study fow low noise level(or variance)
 % using direct method
 
 % Latest Update by T.Cho, Nov. 28, 2021
@@ -8,7 +8,6 @@
 % Add path
 
     addpath(genpath('functions'));
-    addpath(genpath('DirectMethod'));
     
 % Fix reg. parameter - choose regularization parameter to be used in direct
 % method
@@ -30,7 +29,6 @@
     outpath = "Define path where output of this script will be saved"
     
     outfile_fluxes = strcat(outpath,'Fluxes_',num2str(NoiseOptions),'_direct_',date,'.csv');
-    outfile_uncert = strcat(outpath,'Uncert_',num2str(NoiseOptions),'_direct_',date,'.csv');
     
  %%
  
