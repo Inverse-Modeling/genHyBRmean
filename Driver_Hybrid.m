@@ -1,12 +1,11 @@
-%% genHyBRmean
-% This script for testing 6wk case study for low noise level(or variance)
-% with genHyBRmean (iterative + regularization + mean estimation)
+%% Hybrid methods
+% This script for estimating fluxes of case study for low noise level(or variance)
+% using hybrid methods(genHyBRs, genHyBRmean)
 %
-% Latest Update by T.Cho, Jun. 10, 2021
+% Latest Update by T.Cho, Nov. 28, 2021
 
 
-%%
-% Only need to change this section.
+%% User needs to defined the following options in this section.
 % Add path
 
     addpath(genpath('genHyBR-master'));
@@ -17,30 +16,32 @@
     CaseStudy = '6wk';
     % CaseStudy = '1yr';
 
-% For each case, we tested with fire and without fire.
+% Choose hybrid methods: {'genhybr', 'meanest'}
+%   genhybr: genHyBRs in paper
+%   meanest: genHyBRmean in paper    
 
-    Fire = 'on';
-    % Fire = 'off';
-
-% Choose hybrid methods: 'genhybr', 'meanest'
-    
     HybridOptions = 'meanest';
     % maximum iteration of hybrid method
     iter = 50; 
     
-% Choose noise level: 5%, 10%, 50%, 100% (noise ratio to observation)
-    
-    NoiseOptions = 50;
+% Choose noise level: 5%, 10%, 50% (noise ratio to observation)
+% as described in paper
+
+    NoiseOptions = [5, 10, 50]; % one or more options can be chosen
     nNO = length(NoiseOptions);
 
-% Choose regularization option : 'optimal', 'dp', 'LSQR', 'wgcv', 'upre'
+% Choose regularization option : {'optimal', 'dp', 'LSQR'}
+%   optimal: find optimal regularization parameter using exact s
+%   dp: discrepancy principle
+%   LSQR: no regularization parameter, zero(0)
 
-    RegOptions = {'optimal', 'dp', 'LSQR'};
+    RegOptions = {'optimal', 'dp', 'LSQR'}; % one or more options can be chosen
     nRO = length(RegOptions);
     
 % Setup path and filenames for saving outputs
     
-    outpath = strcat('output/',CaseStudy,'/Fire_',Fire,'/',HybridOptions,'/');
+    outpath = "Define path where output of this script will be saved"
+    
     outfile_fluxes = cell(nNO,nRO);
     outfile_output = cell(nNO,nRO);
     
@@ -53,9 +54,6 @@
     
     outfile_fluxes = outfile_fluxes(:);
     outfile_output = outfile_output(:);
-
-
-
 %%
 
 % Choose number of times
@@ -70,7 +68,7 @@
 % Read in the path of H matrix and s matrix
     
     Hpath = strcat(CaseStudy,'/H/');
-    spath = strcat(CaseStudy,'/Fire_',Fire,'/');
+    spath = strcat(CaseStudy,'/s/');
     
 % Create the X matrix only if meanest   
     
@@ -129,28 +127,12 @@
         case 'meanest'
             switch CaseStudy
                 case '6wk' % beta has 8 elements
-                    switch Fire
-                        case 'on'
-                            beta_true = [2.6327, 3.5117, 3.4709, 2.7027, -1.7343, -6.7710, -6.6152, -1.6639];
-                            s_true = [s_true(:); beta_true(:)];
-                            
-                        case 'off'
-                            beta_true = [2.3827, 3.3104, 3.2964, 2.5206, -1.9603, -7.0207, -6.8933, -1.9593];
-                            s_true = [s_true(:); beta_true(:)];
-                    end
-                    
+                    beta_true = [2.6327, 3.5117, 3.4709, 2.7027, -1.7343, -6.7710, -6.6152, -1.6639];
+                    s_true = [s_true(:); beta_true(:)];                    
                 case '1yr'% beta has 12 elements
-                    switch Fire
-                        case 'on'
-                            beta_true = [0.3568, 0.3240, 0.4357, 0.4217, 0.4265, 0.3501, 0.2961, 0.2327, -0.0163, -0.2017, -0.3655, -0.2170];
-                            s_true = [s_true(:); beta_true(:)];
-                        case 'off'
-                            beta_true = [0.1705, 0.1361, 0.2453, 0.2052, 0.2094, 0.1492, 0.0874, 0.0277, -0.2103, -0.4085, -0.5862, -0.4199];
-                            s_true = [s_true(:); beta_true(:)];
-                    end
-                    
+                    beta_true = [0.3568, 0.3240, 0.4357, 0.4217, 0.4265, 0.3501, 0.2961, 0.2327, -0.0163, -0.2017, -0.3655, -0.2170];
+                    s_true = [s_true(:); beta_true(:)];                    
             end
-            
     end
     
  % Setting for parallel computing   
@@ -206,6 +188,7 @@
                 end
             end
         end
+        
         % Spherical covariance model
         D = 1 - 1.5 .* (days   ./theta(4))  + 0.5 .* (days.^3   ./ theta(4).^3);
         D(days   > theta(4)) = 0;
@@ -261,7 +244,7 @@
         
         % Run Main algorithm
         tic;
-        [recons, output] = genHyBR_Separ(H, Z(:), Q, R, input);
+        [recons, output] = genHyBR(H, Z(:), Q, R, input);
         toc;
         
         % Write the outputs to csv file
@@ -271,7 +254,7 @@
         disp('Outputs written to file');
         disp(outfile_f)
         
-        % Choose Output components to save
+        % Choose Output components to remove from save
 %         output = rmfield(output,'U');
 %         output = rmfield(output,'V');
         output = rmfield(output,'QV');

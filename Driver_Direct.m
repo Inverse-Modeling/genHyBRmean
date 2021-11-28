@@ -1,12 +1,16 @@
-% This script is for testing case study with direct method
+%% Direct method
+% This script is for estimating fluxes and of case study fow low noise level(or variance)
+% using direct method
 
-% Latest Update by T.Cho, Jun. 22, 2021
+% Latest Update by T.Cho, Nov. 28, 2021
 
+%% User needs to defined the following options in this section.
 % Add path
 
     addpath(genpath('DirectMethod'));
     
-% Fix reg. parameter
+% Fix reg. parameter - choose regularization parameter to be used in direct
+% method
 
     fix_reg_param = 1;
 
@@ -15,18 +19,15 @@
     CaseStudy = '6wk';
     % CaseStudy = '1yr';
     
-% For each case, we tested with fire and without fire.
-
-    Fire = 'on';
-    % Fire = 'off';
-
-% Choose noise level: 5%, 10%, 50%, 100% (noise ratio to observation)
+% Choose noise level: 5%, 10%, 50% (noise ratio to observation)
+% as described in paper
     
     NoiseOptions = 50;
     
 % Setup path and filenames for saving outputs
     
-    outpath = strcat('output/',CaseStudy,'/Fire_',Fire,'/direct/');
+    outpath = "Define path where output of this script will be saved"
+    
     outfile_fluxes = strcat(outpath,'Fluxes_',num2str(NoiseOptions),'_direct_',date,'.csv');
     outfile_uncert = strcat(outpath,'Uncert_',num2str(NoiseOptions),'_direct_',date,'.csv');
     
@@ -44,7 +45,7 @@
 % Read in the path of H matrix and s matrix
     
     Hpath = strcat(CaseStudy,'/H/');
-    spath = strcat(CaseStudy,'/Fire_',Fire,'/');
+    spath = strcat(CaseStudy,'/s/');
     
 % Create the X matrix   
 
@@ -243,23 +244,4 @@
 
     disp('Outputs written to file');
     disp(outfile_fluxes)
- 
- %% Calculate the uncertainties
- 
-    % The estimated fluxes have units of micromol m-2 s-1.
-	% We'll want to convert the units from micromol m-2 s-1 to micromol m-2.
-	% In this case study, the inverse model will estimate fluxes for 3-hourly time periods,
-	% so we'll convert from (1/s) to (1/3 hours)
-	selu = sel.*60.*60.*3;
-    
-    disp('Calculating the uncertainties')
-    tic;
-    uncert  = uncert_direct(psi,HX,D,E,X,selu,Hpath);
-    disp(toc);
-    
-    disp('Writing outputs to file');
-    dlmwrite(outfile_uncert,full(uncert),',');
 
-    disp('Outputs written to file');
-    disp(outfile_uncert)
-    
