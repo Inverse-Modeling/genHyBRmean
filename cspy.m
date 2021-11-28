@@ -54,7 +54,7 @@ function [] = cspy(varargin)
 %   Authors:
 %   Hugo Gualdron - gualdron@usp.br
 %   Jose Rodrigues - junio@icmc.usp.br
-%   University of São Paulo
+%   University of So Paulo
 if nargin == 0
     return;
 end
@@ -86,6 +86,8 @@ for i=2:2:nargin
             ydir = lower(char(varargin(i+1)));
         case 'xdir'
             xdir = lower(char(varargin(i+1)));
+        case 'caxis'
+            caxisMatrix = cell2mat(varargin(i+1));
     end
 end
 matrix = cell2mat(varargin(1));
@@ -139,8 +141,11 @@ for j=1:channels
     end
     
     [y, x, z] = find(matrix2d);
-    minvalue = min(z);
-    maxvalue = max(z);
+    [cy, cx, cz] = find(caxisMatrix);
+%     minvalue = min(z);
+%     maxvalue = max(z);
+    minvalue = min(cz);
+    maxvalue = max(cz);
     
     %number of integers between minvalue and maxvalue
     if ~islevels 
@@ -155,10 +160,12 @@ for j=1:channels
     
     
     step = (maxvalue - minvalue)/clevels;
-    colors = eval(strcat(MAP,'(', num2str(clevels), ')'));
+%     colors = eval(strcat(MAP,'(', num2str(clevels), ')'));
+    colors = cmocean('balance','pivot',abs(caxisMatrix(1))/sum(abs(caxisMatrix)), clevels);
     step_init = minvalue;
     step_end = minvalue+step;
     colormap(colors);
+    
     if size(matrix2d,1) == size(matrix2d, 2)
         axis square;
     end
@@ -175,10 +182,13 @@ for j=1:channels
         step_init = minvalue + (i-1)*step;
         step_end = minvalue + i*step;
         if i == clevels
-            ids = find(z>=step_init & z<=step_end);
+            ids = find(z>=step_init);
+        elseif i == 1
+            ids = find(z<step_end);
         else
             ids = find(z>=step_init & z<step_end);
         end
+        
         if length(marker) == clevels
             cmarker = char(marker(i));
         else
