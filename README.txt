@@ -33,8 +33,8 @@
    
    REFERENCE:
 
-       "Hybrid Projection Method for Large-scale Inverse Problems with Mean 
-        Estimation in Hierarchical Gaussian Priors". 
+       "Computationally efficient methods for large-scale atmospheric inverse 
+        modeling". 
             2021.
 
    SOFTWARE LANGUAGE:
