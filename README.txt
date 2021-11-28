@@ -60,9 +60,9 @@ and require the data sets:
     https://doi.org/10.5281/zenodo.3241466
 
 - Include genHyBR package in the current path.
-- Put all 'H_i' matrices and 'distmat.mat' in the folders "6wk/H" and "1yr/H"
+- Put all 'H_i' matrices and 'distmat.mat' in the folders "6wk/H/" and "1yr/H/"
 - Put all 's_i' vectors and corresponding Z_5, Z_10, Z_50, and Z_100
-  in the folder "6wk/Fire_on/" and "1yr/Fire_on/"
+  in the folder "6wk/s/" and "1yr/s/"
 
 MainDrivers for each numerical experiments of inverse problems
 
