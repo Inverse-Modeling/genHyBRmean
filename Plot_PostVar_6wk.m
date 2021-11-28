@@ -10,7 +10,9 @@
 % Latest Update by T.Cho, Nov. 28, 2021
 
 %% Load data
-
+    % Add path
+    addpath(genpath('functions'));
+    
     CaseStudy = '6wk';
 
     spath = strcat(CaseStudy,'/s/');

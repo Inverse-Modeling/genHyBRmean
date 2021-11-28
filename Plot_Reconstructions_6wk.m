@@ -10,7 +10,9 @@
 % Latest Update by T.Cho, Nov. 28, 2021
 
 %% Load grid and true average image
-
+    % Add path
+    addpath(genpath('functions'));
+    
     CaseStudy = '6wk';
 
     Hpath = strcat(CaseStudy,'/H/');
