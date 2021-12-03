@@ -65,6 +65,10 @@ and require the data sets:
 - Put all 's_i' vectors and corresponding Z_5, Z_10, Z_50, and Z_100
   in the folder "6wk/s/" and "1yr/s/"
 
+
+Requires: 
+- Hugo Gualdron (2021). cspy.m (https://www.mathworks.com/matlabcentral/fileexchange/46551-cspy-m), MATLAB Central File Exchange. Retrieved December 3, 2021.
+
 MainDrivers for each numerical experiments of inverse problems
 
   Driver_Hybrid.m          Run genHyBRs or genHyBRmean to 6wk & 1yr case study 
