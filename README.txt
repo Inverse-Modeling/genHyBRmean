@@ -68,6 +68,8 @@ and require the data sets:
 
 Requires: 
 - Hugo Gualdron (2021). cspy.m (https://www.mathworks.com/matlabcentral/fileexchange/46551-cspy-m), MATLAB Central File Exchange. Retrieved December 3, 2021.
+- Ben Mitch (2021). Panel (https://www.mathworks.com/matlabcentral/fileexchange/20003-panel), MATLAB Central File Exchange. Retrieved December 10, 2021.
+- Chad Greene (2021). cmocean.m (https://www.mathworks.com/matlabcentral/fileexchange/57773-cmocean-perceptually-uniform-colormaps), MATLAB Central File Exchange. Retrieved December 10, 2021.
 
 MainDrivers for each numerical experiments of inverse problems
 
